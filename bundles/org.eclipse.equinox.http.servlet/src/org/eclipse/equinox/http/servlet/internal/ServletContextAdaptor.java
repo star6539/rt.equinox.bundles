@@ -11,17 +11,127 @@
  *******************************************************************************/
 package org.eclipse.equinox.http.servlet.internal;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.security.*;
 import java.util.*;
 import javax.servlet.*;
+import javax.servlet.ServletRegistration.Dynamic;
+import javax.servlet.FilterRegistration;
+import javax.servlet.ServletRegistration;
+import javax.servlet.descriptor.JspConfigDescriptor;
 import org.osgi.service.http.HttpContext;
 
 public class ServletContextAdaptor implements ServletContext {
 
 	private ServletContext servletContext;
+
+	public int getEffectiveMajorVersion() {
+		return servletContext.getEffectiveMajorVersion();
+	}
+
+	public int getEffectiveMinorVersion() {
+		return servletContext.getEffectiveMinorVersion();
+	}
+
+	public boolean setInitParameter(String name, String value) {
+		return servletContext.setInitParameter(name, value);
+	}
+
+	public Dynamic addServlet(String servletName, String className) {
+		return servletContext.addServlet(servletName, className);
+	}
+
+	public Dynamic addServlet(String servletName, Servlet servlet) {
+		return servletContext.addServlet(servletName, servlet);
+	}
+
+	public Dynamic addServlet(String servletName, Class servletClass) {
+		return servletContext.addServlet(servletName, servletClass);
+	}
+
+	public Servlet createServlet(Class clazz) throws ServletException {
+		return servletContext.createServlet(clazz);
+	}
+
+	public ServletRegistration getServletRegistration(String servletName) {
+		return servletContext.getServletRegistration(servletName);
+	}
+
+	public Map getServletRegistrations() {
+		return servletContext.getServletRegistrations();
+	}
+
+	public javax.servlet.FilterRegistration.Dynamic addFilter(String filterName, String className) {
+		return servletContext.addFilter(filterName, className);
+	}
+
+	public javax.servlet.FilterRegistration.Dynamic addFilter(String filterName, Filter filter) {
+		return servletContext.addFilter(filterName, filter);
+	}
+
+	public javax.servlet.FilterRegistration.Dynamic addFilter(String filterName, Class filterClass) {
+		return servletContext.addFilter(filterName, filterClass);
+	}
+
+	public Filter createFilter(Class clazz) throws ServletException {
+		return servletContext.createFilter(clazz);
+	}
+
+	public FilterRegistration getFilterRegistration(String filterName) {
+		return servletContext.getFilterRegistration(filterName);
+	}
+
+	public Map getFilterRegistrations() {
+		return servletContext.getFilterRegistrations();
+	}
+
+	public SessionCookieConfig getSessionCookieConfig() {
+		return servletContext.getSessionCookieConfig();
+	}
+
+	public void setSessionTrackingModes(Set sessionTrackingModes) {
+		servletContext.setSessionTrackingModes(sessionTrackingModes);
+	}
+
+	public Set getDefaultSessionTrackingModes() {
+		return servletContext.getDefaultSessionTrackingModes();
+	}
+
+	public Set getEffectiveSessionTrackingModes() {
+		return servletContext.getEffectiveSessionTrackingModes();
+	}
+
+	public void addListener(String className) {
+		servletContext.addListener(className);
+	}
+
+	public void addListener(EventListener t) {
+		servletContext.addListener(t);
+	}
+
+	public void addListener(Class listenerClass) {
+		servletContext.addListener(listenerClass);
+	}
+
+	public EventListener createListener(Class clazz) throws ServletException {
+		return servletContext.createListener(clazz);
+	}
+
+	public JspConfigDescriptor getJspConfigDescriptor() {
+		return servletContext.getJspConfigDescriptor();
+	}
+
+	public ClassLoader getClassLoader() {
+		return servletContext.getClassLoader();
+	}
+
+	public void declareRoles(String[] roleNames) {
+		servletContext.declareRoles(roleNames);
+	}
+
 	HttpContext httpContext;
 	private AccessControlContext acc;
 	private ProxyContext proxyContext;

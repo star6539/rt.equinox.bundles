@@ -22,14 +22,22 @@ import java.security.Permission;
 import java.security.PermissionCollection;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.EventListener;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterRegistration;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
+import javax.servlet.ServletRegistration.Dynamic;
+import javax.servlet.SessionCookieConfig;
+import javax.servlet.descriptor.JspConfigDescriptor;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -192,6 +200,110 @@ public class JspServlet extends HttpServlet {
 
 	private class ServletContextAdaptor implements ServletContext {
 		private ServletContext delegate;
+
+		public int getEffectiveMajorVersion() {
+			return delegate.getEffectiveMajorVersion();
+		}
+
+		public int getEffectiveMinorVersion() {
+			return delegate.getEffectiveMinorVersion();
+		}
+
+		public boolean setInitParameter(String name, String value) {
+			return delegate.setInitParameter(name, value);
+		}
+
+		public Dynamic addServlet(String servletName, String className) {
+			return delegate.addServlet(servletName, className);
+		}
+
+		public Dynamic addServlet(String servletName, Servlet servlet) {
+			return delegate.addServlet(servletName, servlet);
+		}
+
+		public Dynamic addServlet(String servletName, Class servletClass) {
+			return delegate.addServlet(servletName, servletClass);
+		}
+
+		public Servlet createServlet(Class clazz) throws ServletException {
+			return delegate.createServlet(clazz);
+		}
+
+		public ServletRegistration getServletRegistration(String servletName) {
+			return delegate.getServletRegistration(servletName);
+		}
+
+		public Map getServletRegistrations() {
+			return delegate.getServletRegistrations();
+		}
+
+		public javax.servlet.FilterRegistration.Dynamic addFilter(String filterName, String className) {
+			return delegate.addFilter(filterName, className);
+		}
+
+		public javax.servlet.FilterRegistration.Dynamic addFilter(String filterName, Filter filter) {
+			return delegate.addFilter(filterName, filter);
+		}
+
+		public javax.servlet.FilterRegistration.Dynamic addFilter(String filterName, Class filterClass) {
+			return delegate.addFilter(filterName, filterClass);
+		}
+
+		public Filter createFilter(Class clazz) throws ServletException {
+			return delegate.createFilter(clazz);
+		}
+
+		public FilterRegistration getFilterRegistration(String filterName) {
+			return delegate.getFilterRegistration(filterName);
+		}
+
+		public Map getFilterRegistrations() {
+			return delegate.getFilterRegistrations();
+		}
+
+		public SessionCookieConfig getSessionCookieConfig() {
+			return delegate.getSessionCookieConfig();
+		}
+
+		public void setSessionTrackingModes(Set sessionTrackingModes) {
+			delegate.setSessionTrackingModes(sessionTrackingModes);
+		}
+
+		public Set getDefaultSessionTrackingModes() {
+			return delegate.getDefaultSessionTrackingModes();
+		}
+
+		public Set getEffectiveSessionTrackingModes() {
+			return delegate.getEffectiveSessionTrackingModes();
+		}
+
+		public void addListener(String className) {
+			delegate.addListener(className);
+		}
+
+		public void addListener(EventListener t) {
+			delegate.addListener(t);
+		}
+
+		public void addListener(Class listenerClass) {
+			delegate.addListener(listenerClass);
+		}
+
+		public EventListener createListener(Class clazz) throws ServletException {
+			return delegate.createListener(clazz);
+		}
+
+		public JspConfigDescriptor getJspConfigDescriptor() {
+			return delegate.getJspConfigDescriptor();
+		}
+
+		public ClassLoader getClassLoader() {
+			return delegate.getClassLoader();
+		}
+
+		public void declareRoles(String[] roleNames) {
+			delegate.declareRoles(roleNames);
+		}
 
 		public ServletContextAdaptor(ServletContext delegate) {
 			this.delegate = delegate;
